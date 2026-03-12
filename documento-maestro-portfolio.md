@@ -105,7 +105,7 @@ Demuestra análisis visual, inteligencia competitiva y lectura estratégica de m
 
 ## 10. Estructura general de trabajo
 
-```text
+
 PORTFOLIO_IA/
 ├── documento-maestro-portfolio.md
 ├── portfolio-web/
@@ -117,7 +117,7 @@ PORTFOLIO_IA/
 └── competemap/
 ## 11. Estructura de la web principal
 
-```text
+
 portfolio-web/
 ├── index.html
 ├── proyectos.html
