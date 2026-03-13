@@ -8,11 +8,15 @@
 # 1. recalcular el ranking
 # 2. generar informes para todos los países
 # 3. generar el informe de un país concreto
+# 4. invocar el agente para analizar un país
+# 5. comparar dos países con la capa agéntica
 #
 # Ejemplos de uso:
 # python src/main.py --ranking
 # python src/main.py --informes
 # python src/main.py --pais "México"
+# python src/main.py --agente-pais "México"
+# python src/main.py --comparar "México" "Turquía"
 # python src/main.py --ranking --informes
 import argparse
 from pathlib import Path
@@ -37,6 +41,7 @@ from src.analysis.generar_informe import (
     generar_informes_para_todos,
     generar_informe_por_pais,
 )
+from src.agent.agent_riesgo_pais import AgenteRiesgoPais
 
 
 # ==========================================================
@@ -65,7 +70,38 @@ def construir_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--pais",
         type=str,
-        help='Genera el informe solo para el país indicado. Ejemplo: --pais "México"',
+        help='Genera el informe Markdown solo para el país indicado. Ejemplo: --pais "México"',
+    )
+
+    parser.add_argument(
+        "--agente-pais",
+        type=str,
+        help='Lanza el agente para analizar un país. Ejemplo: --agente-pais "México"',
+    )
+
+    parser.add_argument(
+        "--sector",
+        type=str,
+        help='Sector opcional para el análisis agéntico. Ejemplo: --sector "agroalimentario"',
+    )
+
+    parser.add_argument(
+        "--objetivo",
+        type=str,
+        help='Objetivo opcional del análisis agéntico. Ejemplo: --objetivo "evaluación preliminar de exportación"',
+    )
+
+    parser.add_argument(
+        "--contexto",
+        type=str,
+        help='Contexto opcional del análisis agéntico. Ejemplo: --contexto "priorización de mercados internacionales"',
+    )
+
+    parser.add_argument(
+        "--comparar",
+        nargs=2,
+        metavar=("PAIS_1", "PAIS_2"),
+        help='Compara dos países con el agente. Ejemplo: --comparar "México" "Turquía"',
     )
 
     return parser
@@ -74,7 +110,7 @@ def construir_parser() -> argparse.ArgumentParser:
 # ==========================================================
 # 5. FUNCIONES DE EJECUCIÓN
 # ==========================================================
-def ejecutar_ranking() -> None:
+def ejecutar_ranking_cli() -> None:
     """
     Ejecuta el cálculo del ranking y muestra un resumen.
     """
@@ -86,7 +122,7 @@ def ejecutar_ranking() -> None:
     print(df[["pais", "score_global", "clasificacion_riesgo", "recomendacion"]])
 
 
-def ejecutar_informes_todos() -> None:
+def ejecutar_informes_todos_cli() -> None:
     """
     Genera informes para todos los países disponibles.
     """
@@ -101,7 +137,7 @@ def ejecutar_informes_todos() -> None:
     print("\nTotal de informes generados:", len(rutas))
 
 
-def ejecutar_informe_pais(nombre_pais: str) -> None:
+def ejecutar_informe_pais_cli(nombre_pais: str) -> None:
     """
     Genera el informe de un único país.
     """
@@ -112,6 +148,51 @@ def ejecutar_informe_pais(nombre_pais: str) -> None:
     print("==========================================================")
     print("País:", nombre_pais)
     print("Ruta:", ruta)
+
+
+def ejecutar_agente_pais_cli(
+    nombre_pais: str,
+    sector: str | None = None,
+    objetivo: str | None = None,
+    contexto: str | None = None,
+) -> None:
+    """
+    Lanza el agente para analizar un país y muestra el informe
+    directamente en consola.
+    """
+    agente = AgenteRiesgoPais()
+    respuesta = agente.analizar_pais(
+        pais=nombre_pais,
+        sector=sector,
+        objetivo=objetivo,
+        contexto=contexto,
+    )
+
+    print("\n==========================================================")
+    print("ANÁLISIS AGÉNTICO DE RIESGO PAÍS")
+    print("==========================================================")
+    print(respuesta.informe)
+
+
+def ejecutar_comparacion_cli(
+    pais_1: str,
+    pais_2: str,
+    objetivo: str | None = None,
+) -> None:
+    """
+    Lanza la comparación entre dos países usando la capa agéntica.
+    """
+    agente = AgenteRiesgoPais()
+    comparativa = agente.comparar_paises(
+        pais_1=pais_1,
+        pais_2=pais_2,
+        objetivo=objetivo,
+    )
+
+    print("\n==========================================================")
+    print("COMPARATIVA AGÉNTICA DE RIESGO PAÍS")
+    print("==========================================================")
+    print(comparativa)
 
 
 # ==========================================================
@@ -125,21 +206,45 @@ def main() -> None:
     args = parser.parse_args()
 
     # Si el usuario no pasa ningún argumento, mostramos ayuda.
-    if not any([args.ranking, args.informes, args.pais]):
+    if not any([
+        args.ranking,
+        args.informes,
+        args.pais,
+        args.agente_pais,
+        args.comparar,
+    ]):
         parser.print_help()
         return
 
     # 1. Recalcular ranking si se solicita
     if args.ranking:
-        ejecutar_ranking()
+        ejecutar_ranking_cli()
 
     # 2. Generar todos los informes si se solicita
     if args.informes:
-        ejecutar_informes_todos()
+        ejecutar_informes_todos_cli()
 
     # 3. Generar informe de un país concreto si se solicita
     if args.pais:
-        ejecutar_informe_pais(args.pais)
+        ejecutar_informe_pais_cli(args.pais)
+
+    # 4. Ejecutar análisis agéntico de un país si se solicita
+    if args.agente_pais:
+        ejecutar_agente_pais_cli(
+            nombre_pais=args.agente_pais,
+            sector=args.sector,
+            objetivo=args.objetivo,
+            contexto=args.contexto,
+        )
+
+    # 5. Ejecutar comparativa agéntica si se solicita
+    if args.comparar:
+        pais_1, pais_2 = args.comparar
+        ejecutar_comparacion_cli(
+            pais_1=pais_1,
+            pais_2=pais_2,
+            objetivo=args.objetivo,
+        )
 
 
 # ==========================================================
