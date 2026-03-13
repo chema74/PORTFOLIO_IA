@@ -25,7 +25,7 @@ Transformo conocimiento experto en soluciones de IA útiles para analizar, ense�
 Presentar quién soy, qué hago y qué tipo de soluciones construyo.
 
 ### Proyectos
-Mostrar los 6 proyectos principales del portfolio con una descripción breve de cada uno.
+Mostrar los 6 proyectos principales del portfolio con una descripción breve de cada uno. 
 
 ### Formación y docencia
 Mostrar mi perfil como formador, diseñador de programas y creador de recursos pedagógicos con IA.
@@ -117,8 +117,7 @@ PORTFOLIO_IA/
 └── competemap/
 ## 11. Estructura de la web principal
 
-
-portfolio-web/
+portfolio_web/
 ├── index.html
 ├── proyectos.html
 ├── formacion-docencia.html
