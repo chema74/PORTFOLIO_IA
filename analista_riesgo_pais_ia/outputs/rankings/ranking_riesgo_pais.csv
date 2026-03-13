@@ -1,0 +1,11 @@
+﻿pais,region,riesgo_politico_institucional,riesgo_macroeconomico,riesgo_regulatorio_cumplimiento,riesgo_geopolitico,riesgo_comercial_operativo,riesgo_sectorial,score_global,clasificacion_riesgo,recomendacion,comentario
+Alemania,Europa,1,1,2,2,1,2,1.45,Riesgo muy bajo,Go,"Entorno estable, alta seguridad jurídica y buen desempeño operativo. Apto como mercado de referencia para pruebas del modelo."
+Francia,Europa,1,2,2,2,1,2,1.65,Riesgo muy bajo,Go,Mercado maduro y estable con marco institucional sólido. Riesgo general bajo para operaciones estructuradas.
+España,Europa,1,2,2,2,1,2,1.65,Riesgo muy bajo,Go,"Entorno europeo estable, operativa accesible y riesgo contenido. Útil como caso comparativo dentro de la UE."
+Polonia,Europa,2,2,2,3,2,2,2.15,Riesgo bajo,Go,Perfil equilibrado con cierta sensibilidad geopolítica regional. Adecuado para probar escenarios de riesgo bajo con cautelas parciales.
+Marruecos,África,3,3,3,2,3,3,2.85,Riesgo medio,Go condicionado,"Mercado relevante para expansión regional con exposición media en variables institucionales, regulatorias y operativas."
+México,América del Norte,3,3,3,2,3,3,2.85,Riesgo medio,Go condicionado,"País de gran interés comercial con riesgos intermedios en seguridad operativa, regulación y entorno institucional."
+India,Asia,3,3,3,3,3,3,3.0,Riesgo medio,Go condicionado,Mercado grande y atractivo con complejidad operativa y regulatoria intermedia. Adecuado para pruebas de evaluación país-sector.
+Argentina,América del Sur,3,5,3,2,3,3,3.25,Riesgo medio,Go condicionado,La fragilidad macroeconómica pesa mucho en la evaluación. Caso útil para probar escenarios donde una dimensión domina el resultado.
+Turquía,Europa-Asia,4,4,3,4,3,3,3.6,Riesgo alto,No-Go,"Entorno con volatilidad macroeconómica y geopolítica significativa. Requiere cautela, seguimiento y medidas de mitigación."
+Nigeria,África,4,4,4,4,4,4,4.0,Riesgo alto,No-Go,Exposición elevada en múltiples dimensiones. Útil como caso de riesgo alto y comparación con mercados de mayor fricción.
